@@ -35,6 +35,10 @@ class ADB():
         return self.PYADB_VERSION
 
     def __init__(self,adb_path=None):
+        """if adb_path not set, check the adb """
+        if None == adb_path:
+            if "Android" in os.popen("adb version"):
+                adb_path = "adb"
         self.__adb_path = adb_path
 
     def __clean__(self):
@@ -228,7 +232,8 @@ class ADB():
         adb devices
         """
         error = 0
-        self.run_cmd("devices")        
+        self.run_cmd("devices")
+        #todo: add unauthorization and offline 
         if self.__error is not None:
             return ''
         try:
